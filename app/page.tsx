@@ -1,36 +1,41 @@
 import ParticleField from '@/components/ui/ParticleField';
 import Navbar from '@/components/layout/Navbar';
 import SecurityTicker from '@/components/layout/SecurityTicker';
+import TimelinePanel from '@/components/panels/TimelinePanel';
+import VaultHero from '@/components/panels/VaultHero';
+import AnalyticsPanel from '@/components/panels/AnalyticsPanel';
 
 export default function Home() {
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--color-obsidian)' }}>
-      {/* Ambient particle background */}
+      {/* Fixed ambient particle background */}
       <ParticleField />
 
-      {/* Content layers above particles */}
-      <div className="relative z-10">
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
         <SecurityTicker />
 
-        {/* Hero placeholder — panels & sections added in subsequent PRs */}
-        <main className="flex items-center justify-center min-h-[80vh]">
-          <div className="text-center space-y-4">
-            <p
-              className="text-xs tracking-[0.4em] uppercase text-cyan-400/60"
-              style={{ fontFamily: 'var(--font-montserrat)' }}
-            >
-              UI Foundation — PR #1
-            </p>
-            <h1
-              className="text-5xl font-bold gradient-text-cyan"
-              style={{ fontFamily: 'var(--font-montserrat)' }}
-            >
-              Thomas Legal Partners
-            </h1>
-            <p className="text-gray-400 text-lg">
-              Design system, layout primitives &amp; mock data ready.
-            </p>
+        {/* Three-column hero row */}
+        <main
+          id="main-dashboard"
+          className="flex-1 grid gap-4 p-4"
+          style={{
+            gridTemplateColumns: '22% 1fr 22%',
+            minHeight: 'calc(100vh - 7rem)',
+          }}
+        >
+          {/* Left: Legal Timeline */}
+          <div className="glass-card p-4 overflow-hidden">
+            <TimelinePanel />
+          </div>
+
+          {/* Center: Digital Vault */}
+          <VaultHero />
+
+          {/* Right: Portal Analytics */}
+          <div className="glass-card p-4 overflow-hidden">
+            <AnalyticsPanel />
           </div>
         </main>
       </div>
