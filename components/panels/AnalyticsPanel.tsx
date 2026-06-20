@@ -4,61 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ShieldCheck, AlertCircle, Users, BarChart3, ChevronDown, ChevronUp } from 'lucide-react';
 import NeonBadge from '@/components/ui/NeonBadge';
+import CyberGauge from '@/components/ui/CyberGauge';
 import { securityMetrics, securityScore } from '@/lib/mock/security';
 import { activeCases } from '@/lib/mock/cases';
-
-/* ── Circular Security Gauge ── */
-function SecurityGauge({ score }: { score: number }) {
-  const radius = 52;
-  const circumference = 2 * Math.PI * radius;
-  const dashOffset = circumference * (1 - score / 100);
-
-  return (
-    <div className="relative flex items-center justify-center" style={{ width: 140, height: 140 }}>
-      {/* Rotating outer dashed ring */}
-      <div
-        className="absolute rounded-full border-2 border-dashed border-cyan-400/15 animate-ring-slow"
-        style={{ width: 136, height: 136 }}
-      />
-
-      <svg width={120} height={120} viewBox="0 0 120 120" className="rotate-[-90deg]">
-        {/* Track */}
-        <circle cx={60} cy={60} r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={8} />
-        {/* Progress arc */}
-        <motion.circle
-          cx={60}
-          cy={60}
-          r={radius}
-          fill="none"
-          stroke="url(#gauge-grad)"
-          strokeWidth={8}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: dashOffset }}
-          transition={{ duration: 1.8, ease: 'easeOut', delay: 0.5 }}
-        />
-        <defs>
-          <linearGradient id="gauge-grad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#00D9FF" />
-            <stop offset="100%" stopColor="#1D4ED8" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      {/* Center score text */}
-      <div className="absolute flex flex-col items-center">
-        <span
-          className="text-2xl font-black gradient-text-cyan"
-          style={{ fontFamily: 'var(--font-montserrat)' }}
-        >
-          {score}
-        </span>
-        <span className="text-[9px] text-gray-500 tracking-widest uppercase">Security</span>
-      </div>
-    </div>
-  );
-}
 
 /* ── Metric Row ── */
 function MetricRow({ label, value, status }: { label: string; value: string; status: 'operational' | 'warning' | 'critical' }) {
@@ -184,7 +132,7 @@ export default function AnalyticsPanel() {
 
         {/* Gauge */}
         <div className="flex justify-center mb-3">
-          <SecurityGauge score={securityScore} />
+          <CyberGauge score={securityScore} />
         </div>
 
         {/* Metrics */}
